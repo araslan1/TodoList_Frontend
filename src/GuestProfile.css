@@ -1,0 +1,99 @@
+@import url('https://fonts.googleapis.com/css2?family=Agbalumo&family=Nunito+Sans:opsz@6..12&display=swap');
+
+body{
+    background: #A795FF;
+    padding: 60px;
+    font-family: 'Nunito Sans', sans;
+}
+
+nav{
+    display: flex;
+    justify-content:space-between;
+    align-items: center;
+}
+
+ul{
+    display: flex;
+    gap: 10px;
+}
+
+h1{
+    color: #FFF;
+    font-family: 'Agbalumo', sans-serif; /* Corrected font-family */
+
+    /* font-family: Arial, Helvetica, sans-serif; */
+    font-size: 40px;
+    font-style: normal;
+    font-weight: 400;
+    line-height: 24px; /* 60% */
+    letter-spacing: -0.8px;
+}
+
+h2{
+    padding: 0px;
+    line-height: 0px;
+}
+
+h3{
+    color: #CACED8;
+    font-size: 18px;
+}
+
+/* Nav Links */
+a{
+    color: white;
+    text-decoration: none;
+    font-weight: bold;
+}
+
+.GuestProfileBox{
+    background: #5E4ABC;
+    border-radius: 20px;
+    padding: 40px 40px; 
+    color: white;
+    margin: auto;
+    margin-top: 100px;
+    width: 60%;
+}
+
+button{
+    background: #A795FF;
+    color: white;
+    padding: 9px 30px;
+    border: none;
+    border-radius: 5px;
+    font-size: 14px;
+    display: block;
+    cursor: pointer;
+    margin-top: 30px;
+    font-weight: bold;
+}
+
+label{
+    display: block;
+    margin: 5px 0px;
+    font-weight: bold;
+}
+
+input{
+    padding: 10px;
+    border-radius: 5px;
+    border: none;
+    width: 100%;
+}
+
+input::placeholder{
+    color: #CACED8;
+}
+
+.section{
+    display: flex;
+    align-items: center;
+    gap: 40px;
+    width: 100%;
+}
+
+.field{
+    display: block;
+    width: 100%;
+}
