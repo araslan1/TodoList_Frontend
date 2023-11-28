@@ -34,8 +34,8 @@ const GuestProfile = () => {
             <h1>To-Do List</h1>
             {/* 11/11 - https://www.pluralsight.com/guides/understanding-links-in-reactjs */}
             <ul>
-                <Link to={"./App"}>Home</Link>
-                <Link to={"./GuestProfile"}>Profile</Link>
+                <Link to={"/"}>Home</Link>
+                <Link to={"/GuestProfile"}>Profile</Link>
             </ul>
         </nav>
         

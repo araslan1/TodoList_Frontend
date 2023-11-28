@@ -1,0 +1,18 @@
+@import url('https://fonts.googleapis.com/css2?family=Sniglet:wght@800&display=swap');
+#TopNav{
+    width: 85vw; 
+    display: flex; 
+    height: 20vh; 
+    justify-content: space-between;
+    align-items: center;
+    position: fixed; 
+    top: 0; 
+}
+
+#TopNav h1 {
+    font-family: 'Sniglet', cursive;
+    color: white; 
+    font-size: 35px; 
+    /* font-weight: 800px;  */
+    letter-spacing: 0.1rem;
+}

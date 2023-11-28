@@ -1,8 +1,6 @@
-import './Signup.css'
-
 import React, { useState } from 'react';
 
-const CreateAccount = () => {
+const Signup = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -120,4 +118,4 @@ const CreateAccount = () => {
   );
 };
 
-export default CreateAccount;
+export default Signup;
