@@ -1,6 +1,6 @@
 import React, { useState } from 'react';
 
-const CreateAccount = () => {
+const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
 
@@ -8,6 +8,48 @@ const CreateAccount = () => {
     console.log(`Email: ${email}, Password: ${password}`);
   };
 
+  const sendInfo = async (event) => {
+    event.preventDefault();
+    try {
+      
+      console.log("trying to send!");
+
+      handleCreateAccount();
+  
+      const action = {
+        action: "login",
+        user_data: 
+          {
+            //fname: "first",
+           // lname: "last",
+            email: email,
+            password: password
+          }
+      };
+  
+      const response = await fetch('http://localhost:8080/todo-list-201/account', {
+        method: 'POST',
+        headers: {
+          "Content-Type": "application/json",
+          "Access-Control-Allow-Origin" : "*",
+          "Access-Control-Allow-Credentials" : true,
+          "status" : 200
+        },
+        body: JSON.stringify(action),
+        mode: 'no-cors',
+      })
+      .then((response) => {
+        console.log("response");
+        console.log(response.body); //displays null
+        })
+        .then((data) => {
+        console.log(data);
+          console.log("Success");
+        });
+    } catch (error) {
+      console.error('Error sending user info:', error);
+    }
+  };
   // CSS STYLES
 
   const headerStyle = {
@@ -74,9 +116,9 @@ const CreateAccount = () => {
       <div style={bodyStyle}>
         <div style={formStyle}>
           <div style={{ ...labelStyle, textAlign: 'center', fontSize: '40px', fontWeight:'bold', marginTop:'48px' }}>
-            Create an account
+            Welcome Back!
           </div>
-          <form>
+          <form onSubmit={sendInfo}>
             <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px',marginTop:'48px',}}>
               <label style={labelStyle}>
                 EMAIL*
@@ -100,14 +142,16 @@ const CreateAccount = () => {
               />
             </div>
             <label style={{ display: 'flex', alignItems: 'center',  marginLeft:'48px', marginRight:'48px', marginTop:'24px', fontSize:'12px',}}>
-              <input type="checkbox" style={{ marginRight: '10px' }} />
-              I agree with Privacy Policy and Terms of Conditions
+             Forgot your password?
             </label>
+            <button type="submit" style={buttonStyle}>
+              Log In
+            </button>
             <button type="button" onClick={handleCreateAccount} style={buttonStyle}>
-              Create account
+              Continue as Guest
             </button>
             <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '14px' }}>
-              Already have an account? <span style={{ color: '#4C3A51', cursor: 'pointer' }}>Sign in here</span>
+            Don't have an account yet?  <span style={{ color: '#4C3A51', cursor: 'pointer' }}>Sign up now</span>
             </div>
           </form>
         </div>
@@ -116,4 +160,4 @@ const CreateAccount = () => {
   );
 };
 
-export default CreateAccount;
+export default Login;
