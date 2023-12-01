@@ -1,5 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
+import { Link } from 'react-router-dom';
+import TopNav from './TopNav';
 
 const Signup = () => {
   const [fname, setFirstName] = useState('');
@@ -110,21 +112,22 @@ const Signup = () => {
     marginTop:'14px',
     alignItems: 'center',
     marginLeft:'48px',
+    borderRadius: '4px',
   };
 
   return (
     <div>
+      <TopNav></TopNav>;
       <div style={headerStyle}>
-      <h1 style={{ color: 'white' }}>To do list</h1>
       </div>
       <div style={bodyStyle}>
         <div style={formStyle}>
-          <div style={{ ...labelStyle, textAlign: 'center', fontSize: '40px', fontWeight:'bold', marginTop:'48px' }}>
+          <div style={{ ...labelStyle, textAlign: 'center', fontSize: '40px', fontWeight:'bold', marginTop:'24px' }}>
             Create an account
           </div>
           <div id="errorMessage" style={{marginLeft: '48px', color: 'red'}}></div>
           <form onSubmit={sendInfo}>
-          <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px',marginTop:'24px',}}>
+          <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px',marginTop:'0px',}}>
               <label style={labelStyle}>
                 FIRST NAME*
               </label>
@@ -180,7 +183,7 @@ const Signup = () => {
               Create account
             </button>
             <div style={{ textAlign: 'center', marginTop: '10px', fontSize: '14px' }}>
-              Already have an account? <span style={{ color: '#4C3A51', cursor: 'pointer' }}>Sign in here</span>
+              Already have an account? <span style={{ color: '#4C3A51', cursor: 'pointer' }}><Link to='/Login'>Sign in here</Link></span>
             </div>
           </form>
         </div>
