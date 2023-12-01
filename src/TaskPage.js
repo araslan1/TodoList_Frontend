@@ -55,6 +55,13 @@ const TaskPage = (props) => {
     ); 
     const [activeCategory, setActiveCategory] = useState(0); // THIS IS INDEX IN CATEGORIES ARRAY
     const [listAddIndex, setListAddIndex] = useState(); // for when a task has to be added, this is the list index of TList[activeCategory]'s taskList that it will be appended to 
+
+    const reformatDate = (inputDate) => {
+        const [year, month, day] = inputDate.split('-');
+        const formattedDate = `${day}/${month}/${year}`;
+        return formattedDate;
+    };
+
     
     const parseDueDate = (dateString) => {
         const parts = dateString.split('-');
@@ -177,6 +184,7 @@ const TaskPage = (props) => {
             action_data: {
                 tname: taskName,
                 tdescription: taskDescription,
+                tdate: reformatDate(dueDate),
                 lID: listAddIndex,                 // Replace with your actual list ID
                 cID: activeCategory            // Replace with your actual category ID
             }
