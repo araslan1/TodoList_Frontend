@@ -1,10 +1,12 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Signup = () => {
   const [fname, setFirstName] = useState('');
   const [lname, setLastName] = useState('');
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
+  const history = useHistory();
 
   const handleCreateAccount = () => {
     console.log(`Email: ${email}, Password: ${password}`);
@@ -14,6 +16,10 @@ const Signup = () => {
     event.preventDefault();
     try {
       
+      if(fname === null){
+        document.getElementById('errorMessage').innerText = 'Enter';
+        return;
+      }
       console.log("trying to send!");
 
       handleCreateAccount();
@@ -33,29 +39,19 @@ const Signup = () => {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin" : "*",
-          "Access-Control-Allow-Credentials" : true,
-          "status" : 200
         },
         body: JSON.stringify(action),
-        mode: 'no-cors',
-      })
-      .then((response) => {
-        console.log("response");
-        console.log(response.body); //displays null
-        })
-        .then((data) => {
-        console.log(data);
-          console.log("Success");
-        });
-  
-      // const response = await fetch('http://localhost:8080/todo-list-201/testservlet'); 
-    //   if (!response.ok) {
-    //     throw new Error('Network response was not ok');
-    //   }
-    //   console.log("response is okay!");
-    //   const data = await response.text();
-    //   console.log(data); 
+      });
+
+      console.log(response.status);
+      if(response.status === 200){
+        // SUCCESSFUL ACCOUNT CREATION
+        history.push('/TaskPage');
+      }
+      else if(response.status === 400){
+        // EMAIL IN USE
+        document.getElementById('errorMessage').innerText = 'User with email already exists';
+      }
     } catch (error) {
       console.error('Error sending user info:', error);
     }
@@ -126,6 +122,7 @@ const Signup = () => {
           <div style={{ ...labelStyle, textAlign: 'center', fontSize: '40px', fontWeight:'bold', marginTop:'48px' }}>
             Create an account
           </div>
+          <div id="errorMessage" style={{marginLeft: '48px', color: 'red'}}></div>
           <form onSubmit={sendInfo}>
           <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px',marginTop:'24px',}}>
               <label style={labelStyle}>
@@ -136,6 +133,7 @@ const Signup = () => {
                 value={fname}
                 onChange={(e) => setFirstName(e.target.value)}
                 style={inputStyle}
+                required
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px',marginTop:'24px',}}>
@@ -147,6 +145,7 @@ const Signup = () => {
                 value={lname}
                 onChange={(e) => setLastName(e.target.value)}
                 style={inputStyle}
+                required
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px',marginTop:'24px',}}>
@@ -158,6 +157,7 @@ const Signup = () => {
                 value={email}
                 onChange={(e) => setEmail(e.target.value)}
                 style={inputStyle}
+                required
               />
             </div>
             <div style={{ display: 'flex', flexDirection: 'column' , marginLeft:'48px', marginRight:'48px', marginTop:'24px',}}>
@@ -169,10 +169,11 @@ const Signup = () => {
                 value={password}
                 onChange={(e) => setPassword(e.target.value)}
                 style={inputStyle}
+                required
               />
             </div>
             <label style={{ display: 'flex', alignItems: 'center',  marginLeft:'48px', marginRight:'48px', marginTop:'24px', fontSize:'12px',}}>
-              <input type="checkbox" style={{ marginRight: '10px', width: 'auto' }} />
+              <input type="checkbox" required style={{ marginRight: '10px', width: 'auto' }} />
               I agree with Privacy Policy and Terms of Conditions
             </label>
             <button type="submit" style={buttonStyle}>
