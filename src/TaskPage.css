@@ -5,13 +5,15 @@
 body {
     margin: 0;
     padding: 0;
-    font-family: 'Arial', sans-serif; /* Set your preferred font-family */
-    background-color: #fff; /* Set your preferred background color */
+    font-family: 'DM Sans', sans; /* Set your preferred font-family */
+    background-color: #A795FF; /* Set your preferred background color */
 }
+
 
 #TaskPage {
     all: initial;
 }
+
 
 #Taskpage {
     background-color: #A795FF;
@@ -21,6 +23,7 @@ body {
     display: flex;
     justify-content: center; 
     align-items: center; 
+    flex-direction: column;
 }
 
 #Taskpage #MainContainer {
@@ -30,7 +33,7 @@ body {
     border-radius: 17px; 
     display: flex; 
     align-items: flex-start; 
-    margin-top: 10vh;
+    /* margin-top: 10vh; */
 }
 
 #MainContainer .categoriesContainer {
@@ -41,21 +44,22 @@ body {
 
 #MainContainer .categoriesContainer .categoryBtn {
     display: block; 
-    width: 200px; 
+    /* width: 200px;  */
     background-color: #2B1887;
     color: white; 
     font-family: 'Inter'; 
-    font-weight: 800; 
-    font-size: 20px; 
+    font-weight: 600; 
+    font-size: 18px; 
     margin-top: 8px; 
-    height: 40px; 
+    padding: 12px 8px;
+   /* height: 40px;  */
     border: none !important; 
-    border-radius: 1px; 
+    border-radius: 10px; 
     cursor: pointer; 
 }
 
 #leftSide {
-    margin-left: 3vw; 
+    margin: 0vw 1vw; 
     width: 18vw; 
     display: flex; 
     flex-direction: column; 
@@ -72,28 +76,30 @@ body {
     background-color: white; 
     width: 10px; 
     height: 100%; 
-    margin-left: 2vw; 
+    /* margin-left: 2vw;  */
 }
 
 
 
 #rightSide {
-    margin-left: 3vw; 
+    margin: 1vh 1vw;
+    /* margin-left: 3vw;  */
     width: 65%;
+    gap: 15px;
     max-width: 65%;
     display: flex; 
     justify-content: flex-start; 
     overflow-x: scroll; 
-    margin-top: 5vh; 
+    /* margin-top: 5vh;  */
 }
 
 #rightSide .taskContainer {
-    min-width: 48%; 
+    min-width: 40%; 
     height: 73vh; 
     background-color: #D5CCFF; 
-    margin-right: 24px; 
+    /* margin-right: 24px;  */
     border-radius: 10px; 
-    font-family: 'Inter'; 
+    font-family: 'DM Sans'; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
@@ -106,6 +112,7 @@ body {
     justify-content: space-around; 
     align-items: center; 
     width: 100%; 
+    padding: 20px;
 }
 
 
@@ -113,7 +120,7 @@ body {
     display: block; 
     margin-right: 10px; 
     color: #2B1887;     
-    font-family: 'Sniglet', cursive;
+    /* font-family: 'Sniglet', cursive; */
 }
 
 #rightSide .taskContainer .addTask {
@@ -125,7 +132,8 @@ body {
     font-weight: 800; 
     background-color: #2B1887;
     min-width: 75px; 
-    height: 25px; 
+    padding: 8px 12px;
+    /* height: 25px;  */
     align-items: center; 
     justify-content: center; 
     border-radius: 10px;
@@ -136,7 +144,7 @@ body {
 #rightSide .taskContainer .taskBox {
     background-color: #F4F2FF; 
     width:  93%; 
-    min-height: 35%; 
+    /* min-height: 35%;  */
     margin-bottom: 13px; 
     border-radius: 10px; 
     display: flex; 
@@ -168,8 +176,8 @@ body {
     margin-top: 1vh; 
     margin-left: 1.1vw; 
     color: black;
-    font-weight: 100 !important; 
-    font-size: 15px; 
+    font-weight: 600 !important; 
+    font-size: 18px; 
 
 }
 
@@ -178,7 +186,8 @@ body {
     margin: none; 
     margin-left: 1vw; 
     color: #797979; 
-    font-family: sans-serif; 
+    font-family: 'DM Sans'; 
+    font-size: 14px;
     max-height: 80%; 
     overflow-y: scroll; 
     scrollbar-color: #2d2b36;;
@@ -189,8 +198,8 @@ body {
     display: block; 
     border: none; 
     background-color: #F4F2FF;
-    width: 40px; 
-    height: 30px; 
+    /* width: 40px;  */
+    /* height: 30px;  */
     cursor: pointer; 
 }
 
@@ -198,11 +207,13 @@ body {
     display: flex;
     align-items: center;
     justify-content: space-between;
+    width: 100%;
 
 }
 #rightSide .taskContainer .taskBox .custom-icon-style {
     color: #2B1887 !important; 
-    width: 100px!important; 
+    width: 50px;
+    /* width: 100px!important;  */
     height: 50px!important; 
     font-weight: bold; /* Set the font weight to make the icon thicker */
 
@@ -219,7 +230,7 @@ body {
 }
 
 .popUp .popUpContainer h2{
-    font-family: "Sniglet", cursive; 
+    /* font-family: "Sniglet", cursive;  */
     color: #2B1887; 
 }
 
@@ -229,15 +240,31 @@ body {
     top: 20%; 
     left: 37%;
     border-radius: 20px;
+    padding: 0px 0px 20px 0px;
     width: 400px;
-    height: 400px; 
+    /* height: 400px;  */
     background-color: white; 
     display: flex; 
     flex-direction: column; 
     align-items: center; 
 }
 
-
+.confirmAddNewList{
+    display: flex; 
+    border: none; 
+    margin: none; 
+    color: white; 
+    font-size: 12px; 
+    font-weight: 800; 
+    background-color: #2B1887;
+    width: 80%; 
+    height: 30px; 
+    align-items: center; 
+    justify-content: center; 
+    border-radius: 10px;
+    margin-bottom: 0;  
+    cursor: pointer; 
+}
 .popUp .popUpContainer .confirmAddNewTask {
     display: flex; 
     border: none; 
@@ -293,29 +320,43 @@ body {
     height: 50px; 
     font-weight: bold; /* Set the font weight to make the icon thicker */
 }
-
+.activeCategoryDisplay{
+    width: 100%;
+    text-align: left;
+    font-weight: bold;
+    color:#2B1887;
+    margin: 0px;
+    text-transform: uppercase;
+}
 .addNewCatBtn {
     background-color: #2B1887;
     color: white; 
     margin-top: 10px; 
-    width: 200px;
-    height: 55px; 
+    /* width: 200px; */
+    /* height: 55px;  */
     border: none; 
-    font-family: 'Inter'; 
-    font-weight: 800; 
-    font-size: 20px; 
-    border-radius: 1px; 
+    /* font-family: 'Inter';  */
+    font-weight: 600; 
+    font-size: 18px; 
+    padding: 12px 8px;
+    border-radius: 10px; 
     cursor: pointer; 
 }
 
 .addNewListBtn {
-    width: 200px;
-    height: 30px; 
-    font-family: 'Inter'; 
+    min-width: 200px;
+    height: 50px; 
+    font-family: 'DM Sans'; 
     font-weight: 800; 
     font-size: 15px; 
     cursor: pointer; 
     border-radius: 10px; 
     border: none; 
-    margin-top: 150px; 
+    background: #D5CCFF;
+    /* margin-top: 150px;  */
+}
+
+input.checkbox{
+    /* width: 20px; */
+    margin-left: 1vw;
 }
