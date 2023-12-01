@@ -405,10 +405,12 @@ const TaskPage = (props) => {
                             <p className="dueDate">{task.dueMonth}/{task.dueDay}/{task.dueYear}</p>          
                             <button className="removeTaskBtn" onClick={() => removeTaskItem(index1, index2)}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button>
                             </div>
-                            
-                            <p className="taskname">{task.taskName}</p>
-                            <p className="taskDescription">{task.taskDescription}</p>
+                            <div style={{display:'flex'}}>
                             <input className="checkbox" type="checkbox"></input>
+                            <p className="taskname">{task.taskName}</p>
+                            </div>
+                            <p className="taskDescription">{task.taskDescription}</p>
+                            {/* <input className="checkbox" type="checkbox"></input> */}
                         </div>))
                         }
                     </div>
