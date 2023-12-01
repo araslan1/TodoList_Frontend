@@ -1,7 +1,7 @@
 import { useEffect, useState } from "react";
 import "./TaskPage.css"
 import TopNav from './TopNav'; 
-import { TbLetterXSmall } from "react-icons/tb";
+import { TbCheck, TbCheckbox, TbLetterXSmall } from "react-icons/tb";
 import { useLocation } from 'react-router-dom';
 
 
@@ -55,7 +55,7 @@ const TaskPage = (props) => {
     ); 
     const [activeCategory, setActiveCategory] = useState(0); // THIS IS INDEX IN CATEGORIES ARRAY
     const [listAddIndex, setListAddIndex] = useState(); // for when a task has to be added, this is the list index of TList[activeCategory]'s taskList that it will be appended to 
-   
+    
     const parseDueDate = (dateString) => {
         const parts = dateString.split('-');
         const dueYear = parseInt(parts[0]);
@@ -87,6 +87,10 @@ const TaskPage = (props) => {
 
     const closeTaskPopUp = () => {
         setTaskPopUp(false); 
+        // Resetting input field values
+        setTaskName('');
+        setTaskDescription('');
+        setDueDate('');
     }
 
     const openTaskPopUp = (TList_index) => {
@@ -101,6 +105,7 @@ const TaskPage = (props) => {
 
     const closeCategoryPopUp = () => {
         setCategoryPopUp(false); 
+        setNewCategory('');
     }
 
     const openTListPopUp = () => {
@@ -109,10 +114,12 @@ const TaskPage = (props) => {
 
     const closeTListPopUp = () => {
         setTListPopUp(false); 
+        setListName('');
     }
 
     const changeActiveCategory = (index) => {
         setActiveCategory(index); 
+        
     }
 
     const handleAddNewCategory = async () => {
@@ -315,6 +322,7 @@ const TaskPage = (props) => {
                 onChange={handleTaskDescriptionChange}
                 placeholder="Enter your description here!"
                 />
+                
                 <label htmlFor="dueDate">Due Date:</label>
                 <input
                 type="date"
@@ -376,14 +384,19 @@ const TaskPage = (props) => {
                     ))}
                 </div>
                 <button className="addNewCatBtn" onClick={openCategoryPopUp}>+ Add New Category</button>
-                <button className="addNewListBtn" onClick={openTListPopUp}>+ Add New List</button>
+                {/* <button className="addNewListBtn" onClick={openTListPopUp}>+ Add New List</button> */}
             </div>
             <div id="verticalWhiteBar"></div>
             <div id="rightSide">
+                {/* <button className="addNewListBtn" onClick={openTListPopUp}>+ Add New List</button> */}
                 {TList && TList.length > 0 && TList[activeCategory] && TList[activeCategory].map((T_List, index1) => (
                     <div key={index1} className="taskContainer">
+                        {/* <p className="activeCategoryDisplay">{categories[activeCategory]}</p> */}
                         <div className="headerTaskContainer">
-                            <h2>{T_List.listName}</h2>
+                            <div style={{flexDirection: 'column'}}>
+                                <p className="activeCategoryDisplay">{categories[activeCategory]}</p>
+                                <h2 style={{margin:'0px'}}>{T_List.listName}</h2>
+                            </div>
                             <button className="addTask" onClick={() => {openTaskPopUp(index1)}}>+ Add New Task</button>
                         </div>
                         {T_List.tasks.map((task, index2) => (
@@ -392,12 +405,15 @@ const TaskPage = (props) => {
                             <p className="dueDate">{task.dueMonth}/{task.dueDay}/{task.dueYear}</p>          
                             <button className="removeTaskBtn" onClick={() => removeTaskItem(index1, index2)}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button>
                             </div>
+                            
                             <p className="taskname">{task.taskName}</p>
                             <p className="taskDescription">{task.taskDescription}</p>
+                            <input className="checkbox" type="checkbox"></input>
                         </div>))
                         }
                     </div>
                 ))}
+                <button className="addNewListBtn" onClick={openTListPopUp}>+ Add New List</button>
             </div>
         </div>
     </div>
