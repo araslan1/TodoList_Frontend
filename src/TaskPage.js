@@ -2,57 +2,68 @@ import { useEffect, useState } from "react";
 import "./TaskPage.css"
 import TopNav from './TopNav'; 
 import { TbLetterXSmall } from "react-icons/tb";
+import { useLocation } from 'react-router-dom';
 
 
-const TaskPage = () => {
+const TaskPage = (props) => {
     const [userName, setUserName] = useState(null); 
     const [taskPopUp, setTaskPopUp] = useState(false); 
     const [TListPopUp ,setTListPopUp] = useState(false); 
     const [categoryPopUp, setCategoryPopUp] = useState(false); 
+    const location = useLocation();
+    const userData = location.state && location.state.userData;
     const [taskName, setTaskName] = useState('');
     const [listName, setListName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const [dueDate, setDueDate] = useState('');
     const [newCategory, setNewCategory] = useState(''); 
-    const [categories, setCategories] = useState(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
+    const [categories, setCategories] = useState([]);
     const [TList, setTList] = useState(
         [
-            //CATEGORY 1 EXAMPLE
-            [
-                {
-                    listName: "Cat 1", 
-                    taskList: 
-                    [
-                        {name: 'CSCI 270',description: 'HW 11', dueDate: '01/2023'}, 
-                        {name: 'CSCI 201',description: 'Final Project', dueDate: '08/2023'}
-                    ]
-                },
-                {
-                    listName: "Cat 1", 
-                    taskList: []
+            // //CATEGORY 1 EXAMPLE
+            // [
+            //     {
+            //         listName: "Cat 1", 
+            //         tasks: 
+            //         [
+            //             {taskName: 'CSCI 270',taskDescription: 'HW 11', dueDate: '01/2023'}, 
+            //             {taskName: 'CSCI 201',taskDescription: 'Final Project', dueDate: '08/2023'}
+            //         ]
+            //     },
+            //     {
+            //         listName: "Cat 1", 
+            //         tasks: []
 
-                }
-            ],
-            // CATEGORY 2 Example
-            [
-                {listName: "", taskList: []}, //empty task list example
-                {listName: "", taskList: []} //empty task list
-            ],
-            // CATEGORY 3
-            [
-                {listName: "", taskList: []}, //empty task list example
-                {listName: "", taskList: []} //empty task list
-            ],
-            // CATEGORY 4
-            [
-                {listName: "", taskList: []}, //empty task list example
-                {listName: "", taskList: []} //empty task list
-            ],
+            //     }
+            // ],
+            // // CATEGORY 2 Example
+            // [
+            //     {listName: "", tasks: []}, //empty task list example
+            //     {listName: "", tasks: []} //empty task list
+            // ],
+            // // CATEGORY 3
+            // [
+            //     {listName: "", tasks: []}, //empty task list example
+            //     {listName: "", tasks: []} //empty task list
+            // ],
+            // // CATEGORY 4
+            // [
+            //     {listName: "", tasks: []}, //empty task list example
+            //     {listName: "", tasks: []} //empty task list
+            // ],
         ]
     ); 
     const [activeCategory, setActiveCategory] = useState(0); // THIS IS INDEX IN CATEGORIES ARRAY
     const [listAddIndex, setListAddIndex] = useState(); // for when a task has to be added, this is the list index of TList[activeCategory]'s taskList that it will be appended to 
    
+    const parseDueDate = (dateString) => {
+        const parts = dateString.split('-');
+        const dueYear = parseInt(parts[0]);
+        const dueMonth = parseInt(parts[1]);
+        const dueDay = parseInt(parts[2]);
+    
+        return { dueMonth, dueDay, dueYear };
+      };
 
     const handleTaskNameChange = (e) => {
         setTaskName(e.target.value);
@@ -136,18 +147,21 @@ const TaskPage = () => {
     }
 
     const handleAddNewTask = async () => {
+        const { dueMonth, dueDay, dueYear } = parseDueDate(dueDate);
         // Gather the values from the input fields
         const newTask = {
-          name: taskName,
-          description: taskDescription,
-          dueDate: dueDate,
+          taskName: taskName,
+          taskDescription: taskDescription,
+          dueDay: dueDay,
+          dueMonth: dueMonth,
+          dueYear: dueYear,
         };
     
     
         // add task
         console.log('New Task:', newTask);
         const newState = [...TList]
-        newState[activeCategory][listAddIndex].taskList.push(newTask);
+        newState[activeCategory][listAddIndex].tasks.push(newTask);
         setTList(newState);
         closeTaskPopUp(); 
 
@@ -190,7 +204,7 @@ const TaskPage = () => {
           // remove task
         console.log('New Task:', newTask);
         const newState = [...TList]
-        newState[activeCategory][TList_Index].taskList.splice(task_index, 1);
+        newState[activeCategory][TList_Index].tasks.splice(task_index, 1);
         setTList(newState);
 
         //remove task fetch request here!
@@ -210,9 +224,9 @@ const TaskPage = () => {
         try {
             const data = await response.text();
             console.log(data);
-            console.log("Success, TList Added!");
+            console.log("Success, task removed!");
         } catch (error) {
-            console.error('Error parsing JSON or adding TList:', error);
+            console.error('Error parsing JSON or removing task:', error);
         }
     }
 
@@ -222,7 +236,7 @@ const TaskPage = () => {
         let newTList = [...TList]; 
         newTList[activeCategory].push({
             listName: listName, 
-            taskList: []
+            tasks: []
         })
         closeTListPopUp(); 
         const action = {
@@ -247,12 +261,33 @@ const TaskPage = () => {
     }
 
   
-  
-
 
     useEffect(() => {
-        setUserName("Adam Raslan");
-    }, []);
+    
+        if (userData) {
+            try {
+                // Extract categoryNames
+                console.log(JSON.stringify(userData));
+                const categoryNames = userData.categories.map(category => category.categoryName);
+                setCategories(categoryNames);
+            
+                // Extract TLists
+                const tLists =[];
+                userData.categories.forEach((category) => {
+                    tLists.push(category.tlists);
+                })
+                setTList(tLists);
+                setUserName(userData.fname + " " + userData.lname);
+                } 
+            catch (error) {
+                console.error('Error parsing JSON:', error);
+            }
+        }
+       
+    
+        // Now you can use userData in your useEffect
+       
+      }, [userData]);
 
 
 
@@ -282,7 +317,7 @@ const TaskPage = () => {
                 />
                 <label htmlFor="dueDate">Due Date:</label>
                 <input
-                type="text"
+                type="date"
                 id="dueDate"
                 value={dueDate}
                 onChange={handleDueDateChange}
@@ -345,20 +380,20 @@ const TaskPage = () => {
             </div>
             <div id="verticalWhiteBar"></div>
             <div id="rightSide">
-                {TList && TList[activeCategory].map((T_List, index1) => (
+                {TList && TList.length > 0 && TList[activeCategory] && TList[activeCategory].map((T_List, index1) => (
                     <div key={index1} className="taskContainer">
                         <div className="headerTaskContainer">
                             <h2>{T_List.listName}</h2>
                             <button className="addTask" onClick={() => {openTaskPopUp(index1)}}>+ Add New Task</button>
                         </div>
-                        {T_List.taskList.map((task, index2) => (
+                        {T_List.tasks.map((task, index2) => (
                         <div className="taskBox">
                             <div className="topHeading">
-                            <p className="dueDate">{task.dueDate}</p>
+                            <p className="dueDate">{task.dueMonth}/{task.dueDay}/{task.dueYear}</p>          
                             <button className="removeTaskBtn" onClick={() => removeTaskItem(index1, index2)}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button>
                             </div>
-                            <p className="taskname">{task.name}</p>
-                            <p className="taskDescription">{task.description}</p>
+                            <p className="taskname">{task.taskName}</p>
+                            <p className="taskDescription">{task.taskDescription}</p>
                         </div>))
                         }
                     </div>
