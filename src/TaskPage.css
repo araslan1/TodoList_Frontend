@@ -191,13 +191,12 @@ body {
     background-color: #F4F2FF;
     width: 40px; 
     height: 30px; 
-    margin-left: 180px;
     cursor: pointer; 
 }
 
 #rightSide .taskContainer .taskBox .topHeading {
     display: flex;
-    align-items: flex-end; 
+    align-items: center;
     justify-content: space-between;
 
 }
