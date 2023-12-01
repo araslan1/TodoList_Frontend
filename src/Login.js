@@ -39,7 +39,13 @@ const Login = () => {
       console.log(response.status);
       if(response.status === 200){
         // CORRECT LOGIN COMBO
-        history.push('/TaskPage');
+        const userDataJson = await response.text();
+        console.log(userDataJson);
+        const userData = JSON.parse(userDataJson);
+        history.push({
+          pathname: '/TaskPage',
+          state: { userData: userData }
+        });
       }
       else if(response.status === 400){
         // NO EMAIL
