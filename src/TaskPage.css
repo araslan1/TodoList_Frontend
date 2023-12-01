@@ -1,13 +1,24 @@
 @import url('https://fonts.googleapis.com/css2?family=Inter:wght@900&display=swap');
 @import url('https://fonts.googleapis.com/css2?family=Sniglet:wght@800&display=swap');
 
+
+body {
+    margin: 0;
+    padding: 0;
+    font-family: 'Arial', sans-serif; /* Set your preferred font-family */
+    background-color: #fff; /* Set your preferred background color */
+}
+
+#TaskPage {
+    all: initial;
+}
+
 #Taskpage {
     background-color: #A795FF;
     width: 100vw;
-    height: 85vh; 
+    height: 100vh; 
     margin: 0; 
     display: flex;
-    flex-direction: column;
     justify-content: center; 
     align-items: center; 
 }
@@ -19,7 +30,7 @@
     border-radius: 17px; 
     display: flex; 
     align-items: flex-start; 
-    margin-top: 2vh;
+    margin-top: 10vh;
 }
 
 #MainContainer .categoriesContainer {
@@ -73,12 +84,11 @@
     display: flex; 
     justify-content: flex-start; 
     overflow-x: scroll; 
-    margin-top: 5vh;
-    margin-bottom: 5vh; 
+    margin-top: 5vh; 
 }
 
 #rightSide .taskContainer {
-    min-width: 50%; 
+    min-width: 48%; 
     height: 73vh; 
     background-color: #D5CCFF; 
     margin-right: 24px; 
@@ -93,11 +103,9 @@
 
 .headerTaskContainer {
     display: flex; 
-    justify-content: space-between; 
+    justify-content: space-around; 
     align-items: center; 
-    width: 90%; 
-    padding-left: 3vw;
-    padding-right: 3vw;
+    width: 100%; 
 }
 
 
@@ -146,7 +154,7 @@
     font-weight: 800; 
     background-color: #2B1887;
     min-width: 75px; 
-    height: 25px; 
+    height: 20px; 
     align-items: center; 
     justify-content: center; 
     border-radius: 4px;
@@ -158,7 +166,7 @@
     display: block; 
     margin: 0; 
     margin-top: 1vh; 
-    margin-left: 1vw; 
+    margin-left: 1.1vw; 
     color: black;
     font-weight: 100 !important; 
     font-size: 15px; 
@@ -183,41 +191,22 @@
     background-color: #F4F2FF;
     width: 40px; 
     height: 30px; 
-    align-self: end;
+    margin-left: 180px;
     cursor: pointer; 
-    margin-right: 8px;
 }
 
 #rightSide .taskContainer .taskBox .topHeading {
     display: flex;
     align-items: flex-end; 
     justify-content: space-between;
-    width: 100%;
-    margin-top: 10px;
-}
 
+}
 #rightSide .taskContainer .taskBox .custom-icon-style {
     color: #2B1887 !important; 
-    width: 30px!important; 
-    height: 30px!important; 
-    /* font-weight: bold; Set the font weight to make the icon thicker */
+    width: 100px!important; 
+    height: 50px!important; 
+    font-weight: bold; /* Set the font weight to make the icon thicker */
 
-}
-
-#rightSide .addTaskListBtn {
-    min-width: 50%;
-    height: 10vh; 
-    background-color: #D5CCFF; 
-    margin-right: 24px; 
-    border-radius: 10px; 
-    border: none;
-    font-family: 'Inter'; 
-    display: flex; 
-    flex-direction: column; 
-    align-items: center; 
-    font-size: 14px;
-    cursor: pointer;
-    font-weight: bold;
 }
 
 .popUp {
@@ -280,9 +269,10 @@
 
 .headerTaskContainerPopup {
     display: flex; 
-    justify-content: space-between; 
+    justify-content: space-around; 
     align-items: center; 
-    width: 90%;  
+    width: 100%; 
+    margin-left: 50px; 
 }
 
 .popUp .popUpContainer .removeTaskBtn {
@@ -291,8 +281,8 @@
     justify-content: center; 
     border: none; 
     background-color: black;
-    width: 40px; 
-    height: 30px; 
+    width: 100px; 
+    height: 50px; 
     background-color: white; 
     cursor: pointer; 
 
@@ -303,4 +293,30 @@
     width: 100px; 
     height: 50px; 
     font-weight: bold; /* Set the font weight to make the icon thicker */
+}
+
+.addNewCatBtn {
+    background-color: #2B1887;
+    color: white; 
+    margin-top: 10px; 
+    width: 200px;
+    height: 55px; 
+    border: none; 
+    font-family: 'Inter'; 
+    font-weight: 800; 
+    font-size: 20px; 
+    border-radius: 1px; 
+    cursor: pointer; 
+}
+
+.addNewListBtn {
+    width: 200px;
+    height: 30px; 
+    font-family: 'Inter'; 
+    font-weight: 800; 
+    font-size: 15px; 
+    cursor: pointer; 
+    border-radius: 10px; 
+    border: none; 
+    margin-top: 150px; 
 }
