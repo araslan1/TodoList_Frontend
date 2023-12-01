@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import TopNav from './TopNav';
+import GuestNav from './GuestNav';
 
 const Signup = () => {
   const [fname, setFirstName] = useState('');
@@ -117,7 +117,7 @@ const Signup = () => {
 
   return (
     <div>
-      <TopNav></TopNav>;
+      <GuestNav></GuestNav>;
       <div style={headerStyle}>
       </div>
       <div style={bodyStyle}>

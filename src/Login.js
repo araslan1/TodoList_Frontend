@@ -1,7 +1,7 @@
 import React, { useState } from 'react';
 import { useHistory } from 'react-router-dom';
 import { Link } from 'react-router-dom';
-import TopNav from './TopNav';
+import GuestNav from './GuestNav';
 
 const Login = () => {
   const [email, setEmail] = useState('');
@@ -61,12 +61,12 @@ const Login = () => {
   };
   // CSS STYLES
 
-  const headerStyle = {
-    background: '#A795FF', 
-    padding: '20px', 
-    textAlign: 'left', 
-    color: 'white !important', 
-    };
+  // const headerStyle = {
+  //   background: '#A795FF', 
+  //   padding: '20px', 
+  //   textAlign: 'left', 
+  //   color: 'white !important', 
+  //   };
 
   const bodyStyle = {
     display: 'flex',
@@ -120,7 +120,7 @@ const Login = () => {
 
   return (
     <div>
-      <TopNav></TopNav>
+      <GuestNav></GuestNav>
 
       <div style={bodyStyle}>
         <div style={formStyle}>
