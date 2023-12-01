@@ -1,70 +1,59 @@
 import { useEffect, useState } from "react";
 import "./TaskPage.css"
 import TopNav from './TopNav'; 
-import { TbX } from "react-icons/tb";
-import { TbCircleCheck } from "react-icons/tb";
-import { TbCircleCheckFilled } from "react-icons/tb";
-
+import { TbLetterXSmall } from "react-icons/tb";
 
 
 const TaskPage = () => {
     const [userName, setUserName] = useState(null); 
-    const [categories, setCategories] = useState(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
-
     const [taskPopUp, setTaskPopUp] = useState(false); 
+    const [TListPopUp ,setTListPopUp] = useState(false); 
+    const [categoryPopUp, setCategoryPopUp] = useState(false); 
     const [taskName, setTaskName] = useState('');
+    const [listName, setListName] = useState('');
     const [taskDescription, setTaskDescription] = useState('');
     const [dueDate, setDueDate] = useState('');
-    
-    const [listName, setListName] = useState('');
-    const [listPopUp, setListPopUp] = useState(false);
-
-    const [categoryName, setCategoryName] = useState('');
-    const [categoryPopUp, setCategoryPopUp] = useState(false);
-    
+    const [newCategory, setNewCategory] = useState(''); 
+    const [categories, setCategories] = useState(['Category 1', 'Category 2', 'Category 3', 'Category 4']);
     const [TList, setTList] = useState(
         [
             //CATEGORY 1 EXAMPLE
             [
-                // {
-                //     listName: "Cat 1", 
-                //     taskList: 
-                //     [
-                //         {name: 'CSCI 270',description: 'HW 11', dueDate: '01/2023'}, 
-                //         {name: 'CSCI 201',description: 'Final Project', dueDate: '08/2023'}
-                //     ]
-                // },
-                // {
-                //     listName: "Cat 1", 
-                //     taskList: []
+                {
+                    listName: "Cat 1", 
+                    taskList: 
+                    [
+                        {name: 'CSCI 270',description: 'HW 11', dueDate: '01/2023'}, 
+                        {name: 'CSCI 201',description: 'Final Project', dueDate: '08/2023'}
+                    ]
+                },
+                {
+                    listName: "Cat 1", 
+                    taskList: []
 
-                // }
+                }
             ],
             // CATEGORY 2 Example
             [
-                // {listName: "", taskList: []}, //empty task list example
-                // {listName: "", taskList: []} //empty task list
+                {listName: "", taskList: []}, //empty task list example
+                {listName: "", taskList: []} //empty task list
             ],
             // CATEGORY 3
             [
-                // {listName: "", taskList: []}, //empty task list example
-                // {listName: "", taskList: []} //empty task list
+                {listName: "", taskList: []}, //empty task list example
+                {listName: "", taskList: []} //empty task list
             ],
             // CATEGORY 4
             [
-                // {listName: "", taskList: []}, //empty task list example
-                // {listName: "", taskList: []} //empty task list
+                {listName: "", taskList: []}, //empty task list example
+                {listName: "", taskList: []} //empty task list
             ],
         ]
     ); 
     const [activeCategory, setActiveCategory] = useState(0); // THIS IS INDEX IN CATEGORIES ARRAY
     const [listAddIndex, setListAddIndex] = useState(); // for when a task has to be added, this is the list index of TList[activeCategory]'s taskList that it will be appended to 
    
-    const changeActiveCategory = (index) => {
-        setActiveCategory(index); 
-    }
 
-    // ADD/REMOVE TASK FUNCTIONS
     const handleTaskNameChange = (e) => {
         setTaskName(e.target.value);
     };
@@ -77,6 +66,14 @@ const TaskPage = () => {
         setDueDate(e.target.value);
     };
 
+    const handleCategoryNameChange = (e) => {
+        setNewCategory(e.target.value); 
+    }
+
+    const handleListNameChange = (e) =>  {
+        setListName(e.target.value); 
+    }
+
     const closeTaskPopUp = () => {
         setTaskPopUp(false); 
     }
@@ -84,15 +81,61 @@ const TaskPage = () => {
     const openTaskPopUp = (TList_index) => {
         setListAddIndex(TList_index);
         setTaskPopUp(true); 
+
     }
 
-    const handleAddNewTask = () => {
-        if (taskName.trim() === '') {
-            // Handle the case where the category name is empty
-            alert("Task name cannot be empty.");
-            return;
+    const openCategoryPopUp = () => {
+        setCategoryPopUp(true); 
+    }
+
+    const closeCategoryPopUp = () => {
+        setCategoryPopUp(false); 
+    }
+
+    const openTListPopUp = () => {
+        setTListPopUp(true); 
+    }
+
+    const closeTListPopUp = () => {
+        setTListPopUp(false); 
+    }
+
+    const changeActiveCategory = (index) => {
+        setActiveCategory(index); 
+    }
+
+    const handleAddNewCategory = async () => {
+        let newCategories = [...categories]; 
+        newCategories.push(newCategory); 
+        setCategories(newCategories); 
+        let newTList = [...TList]; 
+        newTList.push([]); 
+        setTList(newTList); 
+        closeCategoryPopUp(); 
+        console.log(newCategory); 
+        const action = {
+            action: "addCategory",
+            action_data: {
+                cname: newCategory,
+            }
+        };
+        const response = await fetch('http://localhost:8080/todo-list-201/action', {
+            method: 'POST',
+            body: JSON.stringify(action),
+        });
+
+        try {
+            const data = await response.text();
+            console.log(data);
+            console.log("Success, Category Added!");
+        } catch (error) {
+            console.error('Error parsing JSON or adding category:', error);
         }
 
+
+    }
+
+    const handleAddNewTask = async () => {
         // Gather the values from the input fields
         const newTask = {
           name: taskName,
@@ -107,134 +150,120 @@ const TaskPage = () => {
         newState[activeCategory][listAddIndex].taskList.push(newTask);
         setTList(newState);
         closeTaskPopUp(); 
+
+        const action = {
+            action: "addTask",
+            action_data: {
+                tname: taskName,
+                tdescription: taskDescription,
+                lID: listAddIndex,                 // Replace with your actual list ID
+                cID: activeCategory            // Replace with your actual category ID
+            }
+        };
+      
+        const response = await fetch('http://localhost:8080/todo-list-201/action', {
+            method: 'POST',
+            body: JSON.stringify(action),
+        });
+
+        try {
+            const data = await response.text();
+            console.log(data);
+            console.log("Success, Task Added!");
+        } catch (error) {
+            console.error('Error parsing JSON or adding task:', error);
+        }
+    
+
+        // add new task fetch request here!
+        
       };
 
-    const removeTaskItem = (TList_Index, task_index) => {
-       
+    const removeTaskItem = async (TList_Index, task_index) => {
+        const newTask = {
+            name: taskName,
+            description: taskDescription,
+            dueDate: dueDate,
+        };
+      
+      
           // remove task
-          const newState = [...TList]
-          newState[activeCategory][TList_Index].taskList.splice(task_index, 1);
-          setTList(newState);
+        console.log('New Task:', newTask);
+        const newState = [...TList]
+        newState[activeCategory][TList_Index].taskList.splice(task_index, 1);
+        setTList(newState);
+
+        //remove task fetch request here!
+        const action = {
+            action: "removeTask",
+            action_data: {
+              tID: task_index,
+              lID: TList_Index,
+              cID: activeCategory,
+            },
+        };
+        const response = await fetch('http://localhost:8080/todo-list-201/action', {
+            method: 'POST',
+            body: JSON.stringify(action),
+        });
+
+        try {
+            const data = await response.text();
+            console.log(data);
+            console.log("Success, TList Added!");
+        } catch (error) {
+            console.error('Error parsing JSON or adding TList:', error);
+        }
     }
 
-    // ADD/REMOVE LIST FUNCTIONS
-    const openListPopUp = () => {
-        setListPopUp(true);
-    };
-    
-    const closeListPopUp = () => {
-        setListPopUp(false);
-    };
-    
-    const handleListNameChange = (e) => {
-        setListName(e.target.value);
-    };
-    
-    const handleAddNewList = () => {
-        if (listName.trim() === '') {
-            // Handle the case where the category name is empty
-            alert("List name cannot be empty.");
-            return;
-        }
 
-        const newTaskList = {
+
+    const handleAddNewList = async () => {
+        let newTList = [...TList]; 
+        newTList[activeCategory].push({
             listName: listName, 
             taskList: []
+        })
+        closeTListPopUp(); 
+        const action = {
+            action: "addTList",
+            action_data: {
+                lname: listName,     
+                cID: activeCategory,                      
+            },
         };
-        
-        console.log('New List:', newTaskList);
-        const updatedTList = [...TList];
+        const response = await fetch('http://localhost:8080/todo-list-201/action', {
+            method: 'POST',
+            body: JSON.stringify(action),
+        });
 
-        updatedTList[activeCategory] = [...updatedTList[activeCategory], newTaskList];
-
-        setTList(updatedTList);
-        closeListPopUp();
-    };
-
-    // ADD/REMOVE CATEGORY FUNCTIONS
-    const openCategoryPopUp = () => {
-        setCategoryPopUp(true);
-    };
-    
-    const closeCategoryPopUp = () => {
-        setCategoryPopUp(false);
-    };
-    
-    const handleCategoryNameChange = (e) => {
-        setCategoryName(e.target.value);
-    };
-    
-    const handleAddNewCategory = () => {
-        if (categoryName.trim() === '') {
-            // Handle the case where the category name is empty
-            alert("Category name cannot be empty.");
-            return;
-        }
-        
-        console.log('New Category:', categoryName);
-        setCategories([...categories, categoryName]);
-
-        setTList([...TList, []]);
-        
-        setCategoryName('');
-
-        closeCategoryPopUp();
-    };
-    
-
-    const fetchTestInfo = async () => {
         try {
-         console.log("trying to fetch!");
-          const response = await fetch('http://localhost:8080/todo-list-201/testservlet'); 
-          if (!response.ok) {
-            throw new Error('Network response was not ok');
-          }
-          console.log("response is okay!");
-          const data = await response.text();
-          console.log(data); 
+            const data = await response.text();
+            console.log(data);
+            console.log("Success, TList Added!");
         } catch (error) {
-          console.error('Error fetching user info:', error);
+            console.error('Error parsing JSON or adding TList:', error);
         }
-      };
+    }
+
   
   
 
 
     useEffect(() => {
         setUserName("Adam Raslan");
-        // need to fetch userinfo
-        fetchTestInfo();
-
-
-
-        // need to load user's info 
-
-        // values needed:
-        // USERNAME (fname + " " + lname)
-        // Tlists in the frontend = List<Tlists>() lists in backend
-        //  //example task list object
-        // const [taskList, setTaskList] = useState([{
-        //     name: '',
-        //     description: '',
-        //     dueYear: '',
-        //     dueMonth: '',
-        //     dueDay: '',
-        //   }]) 
-        // add in this format!
-
     }, []);
 
 
 
     return (
     <div id ="Taskpage">
-        {/* ADD/REMOVE TASK */}
         {taskPopUp && 
         <div className="popUp">
             <div className="popUpContainer">
                 <div className="headerTaskContainerPopup">
                     <div> <h2>Add New Task</h2></div>
-                    <div><button className="removeTaskBtn" onClick= {() => {closeTaskPopUp()}}><TbX className="custom-icon-style" ></TbX></button></div>
+                    <div><button className="removeTaskBtn" onClick= {() => {closeTaskPopUp()}}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button></div>
                 </div>
                 
                 <label htmlFor="taskName">Task Name:</label>
@@ -262,43 +291,41 @@ const TaskPage = () => {
             </div>
         </div>
         }
-        {/* ADD/REMOVE LIST */}
-        {listPopUp && 
+        {categoryPopUp && 
         <div className="popUp">
             <div className="popUpContainer">
                 <div className="headerTaskContainerPopup">
-                    <div> <h2>Add New List</h2></div>
-                    <div><button className="removeTaskBtn" onClick= {() => {closeListPopUp()}}><TbX className="custom-icon-style" ></TbX></button></div>
+                    <div> <h2>+ Add Category</h2></div>
+                    <div><button className="removeTaskBtn" onClick= {() => {closeCategoryPopUp()}}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button></div>
                 </div>
                 
-                <label htmlFor="listName">List Name:</label>
+                <label htmlFor="newCategory">New Category Name</label>
+                <input
+                type="text"
+                id="newCategory"
+                value={newCategory}
+                onChange={handleCategoryNameChange}
+                />
+                <button className="confirmAddNewTask" onClick={handleAddNewCategory}>+ Add New Category</button>
+            </div>
+        </div>
+        }
+        {TListPopUp && 
+        <div className="popUp">
+            <div className="popUpContainer">
+                <div className="headerTaskContainerPopup">
+                    <div> <h2>+ Add New List</h2></div>
+                    <div><button className="removeTaskBtn" onClick= {() => {closeTListPopUp()}}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button></div>
+                </div>
+                
+                <label htmlFor="listName">Task Name:</label>
                 <input
                 type="text"
                 id="listName"
                 value={listName}
                 onChange={handleListNameChange}
                 />
-                <button className="confirmAddNewTask" onClick={handleAddNewList}>+ Add New List</button>
-            </div>
-        </div>
-        }
-        {/* ADD/REMOVE CATEGORY */}
-        {categoryPopUp && 
-        <div className="popUp">
-            <div className="popUpContainer">
-                <div className="headerTaskContainerPopup">
-                    <div> <h2>Add New Category</h2></div>
-                    <div><button className="removeTaskBtn" onClick= {() => {closeCategoryPopUp()}}><TbX className="custom-icon-style" ></TbX></button></div>
-                </div>
-                
-                <label htmlFor="categoryName">Category Name:</label>
-                <input
-                type="text"
-                id="categoryName"
-                value={categoryName}
-                onChange={handleCategoryNameChange}
-                />
-                <button className="confirmAddNewTask" onClick={handleAddNewCategory}>+ Add New Category</button>
+                <button className="confirmAddNewList" onClick={handleAddNewList}>+ Add New List</button>
             </div>
         </div>
         }
@@ -312,8 +339,9 @@ const TaskPage = () => {
                         {category}
                         </button>
                     ))}
-                    <button className="categoryBtn" onClick={openCategoryPopUp}>+ Add New Category</button>
                 </div>
+                <button className="addNewCatBtn" onClick={openCategoryPopUp}>+ Add New Category</button>
+                <button className="addNewListBtn" onClick={openTListPopUp}>+ Add New List</button>
             </div>
             <div id="verticalWhiteBar"></div>
             <div id="rightSide">
@@ -327,7 +355,7 @@ const TaskPage = () => {
                         <div className="taskBox">
                             <div className="topHeading">
                             <p className="dueDate">{task.dueDate}</p>
-                            <button className="removeTaskBtn" onClick={() => removeTaskItem(index1, index2)}><TbX className="custom-icon-style" ></TbX></button>
+                            <button className="removeTaskBtn" onClick={() => removeTaskItem(index1, index2)}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button>
                             </div>
                             <p className="taskname">{task.name}</p>
                             <p className="taskDescription">{task.description}</p>
@@ -335,7 +363,6 @@ const TaskPage = () => {
                         }
                     </div>
                 ))}
-                <button className="addTaskListBtn" onClick={openListPopUp}>+ Add New Task List</button>
             </div>
         </div>
     </div>
