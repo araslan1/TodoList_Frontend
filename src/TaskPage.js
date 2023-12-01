@@ -304,7 +304,7 @@ const TaskPage = (props) => {
         <div className="popUp">
             <div className="popUpContainer">
                 <div className="headerTaskContainerPopup">
-                    <div> <h2>Add New Task</h2></div>
+                    <div> <h2>+ Add New Task</h2></div>
                     <div><button className="removeTaskBtn" onClick= {() => {closeTaskPopUp()}}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button></div>
                 </div>
                 
@@ -342,7 +342,7 @@ const TaskPage = (props) => {
                     <div><button className="removeTaskBtn" onClick= {() => {closeCategoryPopUp()}}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button></div>
                 </div>
                 
-                <label htmlFor="newCategory">New Category Name</label>
+                <label htmlFor="newCategory">Category Name:</label>
                 <input
                 type="text"
                 id="newCategory"
@@ -361,7 +361,7 @@ const TaskPage = (props) => {
                     <div><button className="removeTaskBtn" onClick= {() => {closeTListPopUp()}}><TbLetterXSmall className="custom-icon-style" ></TbLetterXSmall></button></div>
                 </div>
                 
-                <label htmlFor="listName">Task Name:</label>
+                <label htmlFor="listName">New List Name:</label>
                 <input
                 type="text"
                 id="listName"
