@@ -1,12 +1,11 @@
 import { useEffect, useState } from "react";
 import "./TaskPage.css"
-import TopNav from './TopNav'; 
+import GuestNav from './GuestNav'; 
 import { TbLetterXSmall } from "react-icons/tb";
 import { useLocation } from 'react-router-dom';
 
 
-const TaskPage = (props) => {
-    const [userName, setUserName] = useState(null); 
+const GuestTaskPage = (props) => {
     const [taskPopUp, setTaskPopUp] = useState(false); 
     const [TListPopUp ,setTListPopUp] = useState(false); 
     const [categoryPopUp, setCategoryPopUp] = useState(false); 
@@ -131,24 +130,6 @@ const TaskPage = (props) => {
         setTList(newTList); 
         closeCategoryPopUp(); 
         console.log(newCategory); 
-        const action = {
-            action: "addCategory",
-            action_data: {
-                cname: newCategory,
-            }
-        };
-        const response = await fetch('http://localhost:8080/todo-list-201/action', {
-            method: 'POST',
-            body: JSON.stringify(action),
-        });
-
-        try {
-            const data = await response.text();
-            console.log(data);
-            console.log("Success, Category Added!");
-        } catch (error) {
-            console.error('Error parsing JSON or adding category:', error);
-        }
 
 
     }
@@ -171,29 +152,6 @@ const TaskPage = (props) => {
         newState[activeCategory][listAddIndex].tasks.push(newTask);
         setTList(newState);
         closeTaskPopUp(); 
-
-        const action = {
-            action: "addTask",
-            action_data: {
-                tname: taskName,
-                tdescription: taskDescription,
-                lID: listAddIndex,                 // Replace with your actual list ID
-                cID: activeCategory            // Replace with your actual category ID
-            }
-        };
-      
-        const response = await fetch('http://localhost:8080/todo-list-201/action', {
-            method: 'POST',
-            body: JSON.stringify(action),
-        });
-
-        try {
-            const data = await response.text();
-            console.log(data);
-            console.log("Success, Task Added!");
-        } catch (error) {
-            console.error('Error parsing JSON or adding task:', error);
-        }
     
 
         // add new task fetch request here!
@@ -201,40 +159,11 @@ const TaskPage = (props) => {
       };
 
     const removeTaskItem = async (TList_Index, task_index) => {
-        const newTask = {
-            name: taskName,
-            description: taskDescription,
-            dueDate: dueDate,
-        };
-      
-      
-          // remove task
-        console.log('New Task:', newTask);
         const newState = [...TList]
         newState[activeCategory][TList_Index].tasks.splice(task_index, 1);
         setTList(newState);
 
         //remove task fetch request here!
-        const action = {
-            action: "removeTask",
-            action_data: {
-              tID: task_index,
-              lID: TList_Index,
-              cID: activeCategory,
-            },
-        };
-        const response = await fetch('http://localhost:8080/todo-list-201/action', {
-            method: 'POST',
-            body: JSON.stringify(action),
-        });
-
-        try {
-            const data = await response.text();
-            console.log(data);
-            console.log("Success, task removed!");
-        } catch (error) {
-            console.error('Error parsing JSON or removing task:', error);
-        }
     }
 
 
@@ -246,27 +175,7 @@ const TaskPage = (props) => {
             tasks: []
         })
         closeTListPopUp(); 
-        const action = {
-            action: "addTList",
-            action_data: {
-                lname: listName,     
-                cID: activeCategory,                      
-            },
-        };
-        const response = await fetch('http://localhost:8080/todo-list-201/action', {
-            method: 'POST',
-            body: JSON.stringify(action),
-        });
-
-        try {
-            const data = await response.text();
-            console.log(data);
-            console.log("Success, TList Added!");
-        } catch (error) {
-            console.error('Error parsing JSON or adding TList:', error);
-        }
     }
-
   
 
     useEffect(() => {
@@ -284,7 +193,7 @@ const TaskPage = (props) => {
                     tLists.push(category.tlists);
                 })
                 setTList(tLists);
-                setUserName(userData.fname + " " + userData.lname);
+                // setUserName(userData.fname + " " + userData.lname);
                 } 
             catch (error) {
                 console.error('Error parsing JSON:', error);
@@ -377,10 +286,9 @@ const TaskPage = (props) => {
             </div>
         </div>
         }
-        <TopNav userData={userData} />
+        <GuestNav></GuestNav>
         <div id="MainContainer">
             <div id = "leftSide">
-                {userName && <h1>Welcome, <br></br>{userName}</h1>}
                 <div className="categoriesContainer">
                     {categories && categories.map((category, index) => (
                         <button key={index} className="categoryBtn" onClick={() => changeActiveCategory(index)}>
@@ -427,4 +335,4 @@ const TaskPage = (props) => {
     );
 }
  
-export default TaskPage;
+export default GuestTaskPage;

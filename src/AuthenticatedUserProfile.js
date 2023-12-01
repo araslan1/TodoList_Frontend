@@ -9,49 +9,43 @@ import TopNav from './TopNav';
 const AuthenticatedUserProfile = () => {
     const [userName, setUserName] = useState(null); 
     const [firstName, setFirstName] = useState(null); 
+    const [lastName, setLastName] = useState(null); 
+    const [email, setEmail] = useState(null); 
+    // const [firstName, setFirstName] = useState(null); 
+    const [userData, setUserData] = useState(null); // Initialize userData state
 
     const location = useLocation();
-    const userData = location.state && location.state.userData;
-
-
-
-
 
     useEffect(() => {
-    
-        if (userData) {
-            try {
-                // Extract categoryNames
-                console.log(JSON.stringify(userData));
-                setFirstName(userData.fname);
+        // Extract userData from the location state
+        const userDataFromState = location.state && location.state.userData;
 
-                setUserName(userData.fname + " " + userData.lname);
-                } 
-            catch (error) {
+        if (userDataFromState) {
+            try {
+                console.log(JSON.stringify(userDataFromState));
+                setFirstName(userDataFromState.fname);
+                console.log(firstName);
+                setLastName(userDataFromState.lname);
+                setEmail(userDataFromState.email);
+                setUserName(userDataFromState.fname + " " + userDataFromState.lname);
+                setUserData(userDataFromState); // Set userData state
+            } catch (error) {
                 console.error('Error parsing JSON:', error);
             }
         }
-       
-    
-        // Now you can use userData in your useEffect
-       
-      }, [userData]);
-
-
-
-
+    }, [location.state]);
 
     return ( 
     <div id='UserContainer'>
        <TopNav></TopNav>
         
         <div className='ProfileBox'>
-            <h2>Hello, JANE</h2>
+            <h2>Hello, {firstName}</h2>
             <p style={{fontWeight:'bold'}}>Profile Information</p>
             <div>
-                <p>First Name: Jane </p>
-                <p>Last Name: Doe</p>
-                <p>Email: janedoe@gmail.com</p>
+                <p>First Name: {firstName} </p>
+                <p>Last Name: {lastName}</p>
+                <p>Email: {email}</p>
             </div>
         </div>
     </div> 

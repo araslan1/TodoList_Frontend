@@ -1,7 +1,7 @@
 import './App.css';
 import { BrowserRouter as Router, Route, Switch} from 'react-router-dom';
 import Signup from "./Signup"
-import Home from './Home'
+import GuestTaskPage from './GuestTaskPage'
 import TaskPage from './TaskPage'
 import AuthenticatedUserProfile from './AuthenticatedUserProfile'
 import Login from './Login'
@@ -11,7 +11,7 @@ function App() {
     <Router>
       <div className="App">
             <Switch>
-              <Route exact path="/"><Home /></Route>
+              <Route exact path="/"><GuestTaskPage /></Route>
               <Route path="/signup"><Signup /></Route>
               <Route path="/taskpage"><TaskPage /></Route>
               <Route path="/signup"><Signup /></Route>
