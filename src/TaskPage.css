@@ -360,3 +360,9 @@ input.checkbox{
     /* width: 20px; */
     margin-left: 1vw;
 }
+input[type="checkbox"] {
+    margin-top: 12px;
+    width: 20px;
+    height: 20px; 
+    position: relative;
+  }
