@@ -1,9 +1,10 @@
 import React, { useState } from 'react';
+import { useHistory } from 'react-router-dom';
 
 const Login = () => {
   const [email, setEmail] = useState('');
   const [password, setPassword] = useState('');
-
+  const history = useHistory();
   const handleCreateAccount = () => {
     console.log(`Email: ${email}, Password: ${password}`);
   };
@@ -20,8 +21,6 @@ const Login = () => {
         action: "login",
         user_data: 
           {
-            //fname: "first",
-           // lname: "last",
             email: email,
             password: password
           }
@@ -31,23 +30,25 @@ const Login = () => {
         method: 'POST',
         headers: {
           "Content-Type": "application/json",
-          "Access-Control-Allow-Origin" : "*",
-          "Access-Control-Allow-Credentials" : true,
-          "status" : 200
         },
         body: JSON.stringify(action),
-        mode: 'no-cors',
-      })
-      .then((response) => {
-        console.log("response");
-        console.log(response.body); //displays null
-        })
-        .then((data) => {
-        console.log(data);
-          console.log("Success");
-        });
+      });
+
+      console.log(response.status);
+      if(response.status === 200){
+        // CORRECT LOGIN COMBO
+        history.push('/TaskPage');
+      }
+      else if(response.status === 400){
+        // NO EMAIL
+        document.getElementById('errorMessage').innerText = 'No account associated with that email.';
+      }
+      else if(response.status === 403){
+        // WRONG PASSWORD
+        document.getElementById('errorMessage').innerText = 'Incorrect password.';
+      }
     } catch (error) {
-      console.error('Error sending user info:', error);
+       console.error('Error sending user info:', error);
     }
   };
   // CSS STYLES
@@ -118,8 +119,9 @@ const Login = () => {
           <div style={{ ...labelStyle, textAlign: 'center', fontSize: '40px', fontWeight:'bold', marginTop:'48px' }}>
             Welcome Back!
           </div>
+          <div id="errorMessage" style={{marginLeft: '48px', color: 'red'}}></div>
           <form onSubmit={sendInfo}>
-            <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px',marginTop:'48px',}}>
+            <div style={{ display: 'flex', flexDirection: 'column', marginLeft:'48px', marginRight:'48px'}}>
               <label style={labelStyle}>
                 EMAIL*
               </label>
