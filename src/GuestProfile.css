@@ -6,18 +6,18 @@ body{
     font-family: 'Nunito Sans', sans;
 }
 
-nav{
+#GuestContainer nav{
     display: flex;
     justify-content:space-between;
     align-items: center;
 }
 
-ul{
+#GuestContainer ul{
     display: flex;
     gap: 10px;
 }
 
-h1{
+#GuestContainer h1{
     color: #FFF;
     font-family: 'Agbalumo', sans-serif; /* Corrected font-family */
 
@@ -29,24 +29,24 @@ h1{
     letter-spacing: -0.8px;
 }
 
-h2{
+#GuestContainer h2{
     padding: 0px;
     line-height: 0px;
 }
 
-h3{
+#GuestContainer h3{
     color: #CACED8;
     font-size: 18px;
 }
 
 /* Nav Links */
-a{
+#GuestContainer a{
     color: white;
     text-decoration: none;
     font-weight: bold;
 }
 
-.GuestProfileBox{
+#GuestContainer .GuestProfileBox{
     background: #5E4ABC;
     border-radius: 20px;
     padding: 40px 40px; 
@@ -56,7 +56,7 @@ a{
     width: 60%;
 }
 
-button{
+#GuestContainer button{
     background: #A795FF;
     color: white;
     padding: 9px 30px;
@@ -69,31 +69,31 @@ button{
     font-weight: bold;
 }
 
-label{
+#GuestContainer label{
     display: block;
     margin: 5px 0px;
     font-weight: bold;
 }
 
-input{
+#GuestContainer input{
     padding: 10px;
     border-radius: 5px;
     border: none;
     width: 100%;
 }
 
-input::placeholder{
+#GuestContainer input::placeholder{
     color: #CACED8;
 }
 
-.section{
+#GuestContainer .section{
     display: flex;
     align-items: center;
     gap: 40px;
     width: 100%;
 }
 
-.field{
+#GuestContainer .field{
     display: block;
     width: 100%;
 }

@@ -1,11 +1,12 @@
 @import url('https://fonts.googleapis.com/css2?family=Sniglet:wght@800&display=swap');
 #TopNav{
-    width: 85vw; 
+    width: 82vw; 
+    /* width: 100vh; */
     display: flex; 
-    height: 20vh; 
+    height: 10vh; 
     justify-content: space-between;
     align-items: center;
-    position: fixed; 
+    position: relative; 
     top: 0; 
 }
 
