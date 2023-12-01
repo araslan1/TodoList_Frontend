@@ -4,9 +4,10 @@
 #Taskpage {
     background-color: #A795FF;
     width: 100vw;
-    height: 100vh; 
+    height: 85vh; 
     margin: 0; 
     display: flex;
+    flex-direction: column;
     justify-content: center; 
     align-items: center; 
 }
@@ -18,7 +19,7 @@
     border-radius: 17px; 
     display: flex; 
     align-items: flex-start; 
-    margin-top: 10vh;
+    margin-top: 2vh;
 }
 
 #MainContainer .categoriesContainer {
@@ -72,7 +73,8 @@
     display: flex; 
     justify-content: flex-start; 
     overflow-x: scroll; 
-    margin-top: 5vh; 
+    margin-top: 5vh;
+    margin-bottom: 5vh; 
 }
 
 #rightSide .taskContainer {
@@ -91,9 +93,11 @@
 
 .headerTaskContainer {
     display: flex; 
-    justify-content: space-around; 
+    justify-content: space-between; 
     align-items: center; 
-    width: 100%; 
+    width: 90%; 
+    padding-left: 3vw;
+    padding-right: 3vw;
 }
 
 
@@ -142,7 +146,7 @@
     font-weight: 800; 
     background-color: #2B1887;
     min-width: 75px; 
-    height: 20px; 
+    height: 25px; 
     align-items: center; 
     justify-content: center; 
     border-radius: 4px;
@@ -154,7 +158,7 @@
     display: block; 
     margin: 0; 
     margin-top: 1vh; 
-    margin-left: 1.1vw; 
+    margin-left: 1vw; 
     color: black;
     font-weight: 100 !important; 
     font-size: 15px; 
@@ -179,22 +183,41 @@
     background-color: #F4F2FF;
     width: 40px; 
     height: 30px; 
-    margin-left: 180px;
+    align-self: end;
     cursor: pointer; 
+    margin-right: 8px;
 }
 
 #rightSide .taskContainer .taskBox .topHeading {
     display: flex;
     align-items: flex-end; 
     justify-content: space-between;
-
+    width: 100%;
+    margin-top: 10px;
 }
+
 #rightSide .taskContainer .taskBox .custom-icon-style {
     color: #2B1887 !important; 
-    width: 100px!important; 
-    height: 50px!important; 
-    font-weight: bold; /* Set the font weight to make the icon thicker */
+    width: 30px!important; 
+    height: 30px!important; 
+    /* font-weight: bold; Set the font weight to make the icon thicker */
 
+}
+
+#rightSide .addTaskListBtn {
+    min-width: 50%;
+    height: 10vh; 
+    background-color: #D5CCFF; 
+    margin-right: 24px; 
+    border-radius: 10px; 
+    border: none;
+    font-family: 'Inter'; 
+    display: flex; 
+    flex-direction: column; 
+    align-items: center; 
+    font-size: 14px;
+    cursor: pointer;
+    font-weight: bold;
 }
 
 .popUp {
@@ -257,10 +280,9 @@
 
 .headerTaskContainerPopup {
     display: flex; 
-    justify-content: space-around; 
+    justify-content: space-between; 
     align-items: center; 
-    width: 100%; 
-    margin-left: 50px; 
+    width: 90%;  
 }
 
 .popUp .popUpContainer .removeTaskBtn {
@@ -269,8 +291,8 @@
     justify-content: center; 
     border: none; 
     background-color: black;
-    width: 100px; 
-    height: 50px; 
+    width: 40px; 
+    height: 30px; 
     background-color: white; 
     cursor: pointer; 
 
